@@ -1,10 +1,8 @@
 package com.hyperdondon.lib.powers.cooldown.system;
 
-import com.hyperdondon.lib.SMPPlugin;
 import com.hyperdondon.lib.powers.Power;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.JoinConfiguration;
 import org.bukkit.event.Listener;
 import org.mineacademy.fo.Common;
 
