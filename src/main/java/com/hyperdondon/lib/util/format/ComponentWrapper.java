@@ -4,7 +4,10 @@ import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.mineacademy.fo.Common;
+import org.bukkit.ChatColor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ComponentWrapper {
     @Getter
@@ -15,11 +18,11 @@ public class ComponentWrapper {
     }
 
     public ComponentWrapper(String... texts) {
-        component = parse(String.join("\n", texts));
+        this.component = parse(String.join("\n&r", texts));
     }
 
     public static Component parse(String text) {
-        text = Common.colorize(text); //use the foundation colorizing method that parses and turns it into using section signs.
+        text = ChatColor.translateAlternateColorCodes('&', text); //ampersand coloring is dope
         text = MiniMessage.miniMessage().serialize(LegacyComponentSerializer.legacySection().deserialize(text)); //turn the text into a component, then turn it into minimessage
         if (text.startsWith("\\"))
             text = text.substring(1); //for whatever reason, the text will have a blackslash at the start and removing it makes it work??
@@ -45,5 +48,16 @@ public class ComponentWrapper {
 
     public String toAmpersand() {
         return LegacyComponentSerializer.legacyAmpersand().serialize(component);
+    }
+
+    public List<Component> splitLines() {
+        List<Component> lines = new ArrayList<>();
+        String serialized = LegacyComponentSerializer.legacySection().serialize(component);
+
+        for (String line : serialized.split("\n")) {
+            lines.add(LegacyComponentSerializer.legacySection().deserialize(line));
+        }
+
+        return lines;
     }
 }

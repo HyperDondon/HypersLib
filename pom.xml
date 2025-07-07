@@ -43,60 +43,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.3</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <artifactSet>
-                                <includes>
-                                    <include>${foundation.path}:Foundation*</include>
-                                    <include>net.kyori:adventure-api</include>
-                                    <include>net.kyori:adventure-key</include>
-                                    <include>net.kyori:adventure-text-serializer-gson</include>
-                                    <include>net.kyori:adventure-text-serializer-legacy</include>
-                                    <include>net.kyori:examination-api</include>
-                                    <include>net.kyori:examination-string</include>
-                                    <include>net.kyori:adventure-nbt</include>
-                                    <include>net.kyori:adventure-text-serializer-bungeecord</include>
-                                    <include>net.kyori:adventure-text-serializer-gson-legacy-impl</include>
-                                    <include>net.kyori:adventure-text-serializer-json</include>
-                                    <include>net.kyori:adventure-platform-viaversion</include>
-                                    <include>net.kyori:adventure-text-minimessage</include>
-                                    <include>net.kyori:adventure-platform-bukkit</include>
-                                    <include>net.kyori:adventure-platform-api</include>
-                                    <include>net.kyori:adventure-platform-facet</include>
-                                </includes>
-                            </artifactSet>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <relocations>
-                                <relocation>
-                                    <pattern>org.mineacademy.fo</pattern>
-                                    <shadedPattern>${project.groupId}.libs.org.mineacademy.fo
-                                    </shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>net.kyori</pattern>
-                                    <shadedPattern>${project.groupId}.libs.net.kyori
-                                    </shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>fr.skytasul</pattern>
-                                    <shadedPattern>${project.groupId}.libs.fr.skytasul
-                                    </shadedPattern>
-                                </relocation>
-                            </relocations>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
         <resources>
             <resource>
@@ -176,7 +122,6 @@
             <groupId>com.github.puregero</groupId>
             <artifactId>multilib</artifactId>
             <version>1.2.4</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -215,6 +160,5 @@
             <version>3.13.56</version>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
 </project>

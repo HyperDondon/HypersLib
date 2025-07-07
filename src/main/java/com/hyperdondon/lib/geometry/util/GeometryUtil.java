@@ -1,27 +1,30 @@
-package com.hyperdondon.lib.util.format.geometry;
+package com.hyperdondon.lib.geometry.util;
 
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
+/**
+ * Used for location manipulation. Usually for particles and other effects.
+ */
 public class GeometryUtil {
     //Circular Stuff
-    public static Vector getSphericalVector(double r, double yaw, double pitch) {
-        double x = r * Math.cos(pitch) * Math.cos(yaw);
-        double y = r * Math.sin(pitch);
-        double z = r * Math.cos(pitch) * Math.sin(yaw);
+    public static Vector getSphericalVector(double pRadius, double pYaw, double pPitch) {
+        double x = pRadius * Math.cos(pPitch) * Math.cos(pYaw);
+        double y = pRadius * Math.sin(pPitch);
+        double z = pRadius * Math.cos(pPitch) * Math.sin(pYaw);
         return new Vector(x, y, z);
     }
 
-    public static Vector getSphericalVector(double r, double yaw) {
-        return getSphericalVector(r, yaw, 0);
+    public static Vector getSphericalVector(double pRadius, double pYaw) {
+        return getSphericalVector(pRadius, pYaw, 0);
     }
 
-    public static double getParticleAmount(double r, double density) {
-        return (2 * Math.PI * r / density);
+    public static double getCircularParticleAmount(double pRadius, double density) {
+        return (2 * Math.PI * pRadius / density);
     }
 
-    public static double getYaw(double r, double iteration, double density) {
-        return (iteration * 360) / getParticleAmount(r, density);
+    public static double getCircularYaw(double pRadius, double iteration, double density) {
+        return (iteration * 360) / getCircularParticleAmount(pRadius, density);
     }
 
     //Directional stuff
@@ -39,18 +42,18 @@ public class GeometryUtil {
 
     public static Location leftBlocks(Location pLocation, double pBlocks) {
         Location clone = pLocation.clone();
-        float yaw = clone.getYaw();
+        float pYaw = clone.getYaw();
 
-        double radians = Math.toRadians(yaw - 90);
+        double radians = Math.toRadians(pYaw - 90);
         Vector left = new Vector(-Math.sin(radians), 0, Math.cos(radians)).normalize().multiply(pBlocks);
         return clone.add(left);
     }
 
     public static Location rightBlocks(Location pLocation, double pBlocks) {
         Location clone = pLocation.clone();
-        float yaw = clone.getYaw();
+        float pYaw = clone.getYaw();
 
-        double radians = Math.toRadians(yaw + 90);
+        double radians = Math.toRadians(pYaw + 90);
         Vector right = new Vector(-Math.sin(radians), 0, Math.cos(radians)).normalize().multiply(pBlocks);
         return clone.add(right);
     }

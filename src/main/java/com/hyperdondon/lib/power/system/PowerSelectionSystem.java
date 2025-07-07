@@ -1,9 +1,8 @@
-package com.hyperdondon.lib.powers.cooldown.system;
+package com.hyperdondon.lib.power.system;
 
-import com.hyperdondon.lib.item.SMPItem;
-import com.hyperdondon.lib.powers.Power;
+import com.hyperdondon.lib.item.util.SMPItem;
+import com.hyperdondon.lib.power.PowerData;
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
@@ -19,7 +18,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 @Getter
-public class PowerSelectionSystem implements Listener {
+public final class PowerSelectionSystem implements Listener {
     private static final PowerSelectionSystem instance = new PowerSelectionSystem();
     private HashMap<UUID, Integer> selectors = new HashMap<>();
     private ArrayList<PowerData> powers = new ArrayList();

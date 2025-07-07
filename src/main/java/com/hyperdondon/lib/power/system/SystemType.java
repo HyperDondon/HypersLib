@@ -1,4 +1,4 @@
-package com.hyperdondon.lib.powers.cooldown.system;
+package com.hyperdondon.lib.power.system;
 
 public enum SystemType {
     SELECTION,
