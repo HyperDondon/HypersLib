@@ -1,7 +1,12 @@
 package com.hyperdondon.lib.geometry.util;
 
 import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.util.Vector;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Used for location manipulation. Usually for particles and other effects.
@@ -86,5 +91,28 @@ public class GeometryUtil {
         Vector right = direction.clone().crossProduct(new Vector(0, 1, 0)).normalize(); // Right
         Vector up = right.clone().crossProduct(direction).normalize(); // Local up
         return clone.subtract(up.multiply(pBlocks));
+    }
+
+    public static List<Block> getBlocksBetween(Location loc1, Location loc2) {
+        List<Block> blocks = new ArrayList<>();
+
+        int minX = Math.min(loc1.getBlockX(), loc2.getBlockX());
+        int minY = Math.min(loc1.getBlockY(), loc2.getBlockY());
+        int minZ = Math.min(loc1.getBlockZ(), loc2.getBlockZ());
+        int maxX = Math.max(loc1.getBlockX(), loc2.getBlockX());
+        int maxY = Math.max(loc1.getBlockY(), loc2.getBlockY());
+        int maxZ = Math.max(loc1.getBlockZ(), loc2.getBlockZ());
+
+        World world = loc1.getWorld();
+
+        for (int x = minX; x <= maxX; x++) {
+            for (int y = minY; y <= maxY; y++) {
+                for (int z = minZ; z <= maxZ; z++) {
+                    blocks.add(world.getBlockAt(x, y, z));
+                }
+            }
+        }
+
+        return blocks;
     }
 }

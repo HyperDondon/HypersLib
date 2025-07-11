@@ -1,4 +1,4 @@
-package com.hyperdondon.lib.util.format;
+package com.hyperdondon.lib.format.util;
 
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
@@ -38,8 +38,7 @@ public class ComponentWrapper {
     }
 
     public static String format(String text) {
-        ComponentWrapper wrapper = new ComponentWrapper(text);
-        return wrapper.toSectionSign();
+        return new ComponentWrapper(text).toSectionSign();
     }
 
     public String toSectionSign() {

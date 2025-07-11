@@ -2,7 +2,7 @@ package com.hyperdondon.lib.item.util;
 
 
 import com.hyperdondon.lib.SMPPlugin;
-import com.hyperdondon.lib.util.format.ComponentWrapper;
+import com.hyperdondon.lib.format.util.ComponentWrapper;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemFlag;

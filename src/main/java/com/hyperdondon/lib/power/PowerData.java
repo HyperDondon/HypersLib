@@ -1,8 +1,8 @@
 package com.hyperdondon.lib.power;
 
+import com.hyperdondon.lib.format.util.ComponentWrapper;
 import com.hyperdondon.lib.item.util.SMPItem;
 import com.hyperdondon.lib.power.system.ActionUse;
-import com.hyperdondon.lib.util.format.ComponentWrapper;
 import lombok.Getter;
 import lombok.Setter;
 
