@@ -14,14 +14,14 @@ public class ComponentWrapper {
     private final Component component;
 
     public ComponentWrapper(String text) {
-        component = parse(text);
+        component = deserialize(text);
     }
 
     public ComponentWrapper(String... texts) {
-        this.component = parse(String.join("\n&r", texts));
+        this.component = deserialize(String.join("\n&r", texts));
     }
 
-    public static Component parse(String text) {
+    public static Component deserialize(String text) {
         text = ChatColor.translateAlternateColorCodes('&', text); //ampersand coloring is dope
         text = MiniMessage.miniMessage().serialize(LegacyComponentSerializer.legacySection().deserialize(text)); //turn the text into a component, then turn it into minimessage
         if (text.startsWith("\\"))
@@ -35,10 +35,6 @@ public class ComponentWrapper {
 
     public static Component miniMessage(String... texts) {
         return miniMessage(String.join("\n", texts));
-    }
-
-    public static String format(String text) {
-        return new ComponentWrapper(text).toSectionSign();
     }
 
     public String toSectionSign() {

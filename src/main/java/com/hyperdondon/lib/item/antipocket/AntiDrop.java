@@ -1,7 +1,6 @@
 package com.hyperdondon.lib.item.antipocket;
 
 import com.hyperdondon.lib.item.util.SMPItem;
-import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,15 +11,14 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.mineacademy.fo.annotation.AutoRegister;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@AutoRegister
 public final class AntiDrop implements Listener {
-    @Getter
-    private static final AntiDrop instance = new AntiDrop();
-
     private final Map<UUID, ItemStack> lastCursorItem = new HashMap<UUID, ItemStack>();
 
     //Make the slots checked only the ones you can pick up
@@ -65,5 +63,4 @@ public final class AntiDrop implements Listener {
         if (canHoldTwoWaterBuckets(e.getPlayer())) return;
         e.setCancelled(true);
     }
-
 }

@@ -15,22 +15,19 @@ public abstract class PowerHandler {
 
     public PowerHandler() {
         Common.runTimer(1, () -> {
+            onTick();
             for (Passive passive : passives) {
                 passive.tick();
             }
-        });
-        Common.runTimer(20, () -> {
-            for (Passive passive : passives) {
-                passive.second();
-            }
-        });
-
-        Common.runTimer(1, () -> {
             for (PowerData powerData : powers) {
                 powerData.getPower().tick();
             }
         });
         Common.runTimer(20, () -> {
+            everySecond();
+            for (Passive passive : passives) {
+                passive.second();
+            }
             for (PowerData powerData : powers) {
                 powerData.getPower().second();
             }
@@ -40,6 +37,12 @@ public abstract class PowerHandler {
     public abstract ItemStack getItem();
 
     public abstract Enum<?> getType();
+
+    protected void onTick() {
+    }
+
+    protected void everySecond() {
+    }
 
     public void addPower(PowerData power) {
         powers.add(power);

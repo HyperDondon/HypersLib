@@ -12,8 +12,8 @@ public abstract class SMPPlugin extends SimplePlugin {
     protected abstract void onSMPPluginStart();
 
     public void onPluginStart() {
-        onSMPPluginStart();
         registerKotlinObjectListeners();
+        onSMPPluginStart();
     }
 
     public void registerKotlinObjectListeners() {
