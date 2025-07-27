@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.util.Vector;
+import org.mineacademy.fo.RandomUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,12 @@ import java.util.List;
 public class GeometryUtil {
     //Circular Stuff
     public static Vector getSphericalVector(double pRadius, double pYaw, double pPitch) {
-        double x = pRadius * Math.cos(pPitch) * Math.cos(pYaw);
-        double y = pRadius * Math.sin(pPitch);
-        double z = pRadius * Math.cos(pPitch) * Math.sin(pYaw);
+        double yawRad = Math.toRadians(pYaw);
+        double pitchRad = Math.toRadians(pPitch);
+
+        double x = pRadius * Math.cos(pitchRad) * Math.cos(yawRad);
+        double y = pRadius * Math.sin(pitchRad);
+        double z = pRadius * Math.cos(pitchRad) * Math.sin(yawRad);
         return new Vector(x, y, z);
     }
 
@@ -114,5 +118,17 @@ public class GeometryUtil {
         }
 
         return blocks;
+    }
+
+    public static Vector randomVector(double spread) {
+        return randomVector(spread, spread, spread);
+    }
+
+    public static Vector randomVector(double x, double y, double z) {
+        double vX = -x + (x - -x) * RandomUtil.getRandom().nextDouble();
+        double vY = -y + (y - -y) * RandomUtil.getRandom().nextDouble();
+        double vZ = -y + (y - -y) * RandomUtil.getRandom().nextDouble();
+
+        return new Vector(vX, vY, vZ);
     }
 }

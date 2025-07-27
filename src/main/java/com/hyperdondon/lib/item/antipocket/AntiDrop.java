@@ -59,6 +59,7 @@ public final class AntiDrop implements Listener {
     //Don't use the Paper event, it just doesn't work.
     @EventHandler
     public void onPickUp(PlayerPickupItemEvent e) {
+        if (!lastCursorItem.containsKey(e.getPlayer().getUniqueId())) return;
         if (!SMPItem.isSMPItem(lastCursorItem.get(e.getPlayer().getUniqueId()))) return;
         if (canHoldTwoWaterBuckets(e.getPlayer())) return;
         e.setCancelled(true);

@@ -25,6 +25,10 @@ public abstract class SMPItem<T extends Enum<T>> {
     }
 
     public static boolean isSMPItem(ItemStack item) {
+        if (item == null)
+            return false;
+        if (!item.hasItemMeta())
+            return false;
         return getID(item) != null;
     }
 

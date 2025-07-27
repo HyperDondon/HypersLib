@@ -14,7 +14,7 @@ public final class AntiStore implements Listener {
     public void onInvClick(InventoryClickEvent event) {
         if (event.getClickedInventory() != event.getWhoClicked().getInventory()) {
             if (event.getClick() == ClickType.LEFT || event.getClick() == ClickType.RIGHT) {
-                if (SMPItem.isSMPItem(event.getWhoClicked().getItemOnCursor())) {
+                if (SMPItem.isSMPItem(event.getCurrentItem())) {
                     event.setCancelled(true);
                     return;
                 }
