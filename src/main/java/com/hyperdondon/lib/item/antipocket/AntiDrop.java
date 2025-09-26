@@ -5,17 +5,17 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.mineacademy.fo.Common;
 import org.mineacademy.fo.annotation.AutoRegister;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @AutoRegister
 public final class AntiDrop implements Listener {
@@ -25,7 +25,7 @@ public final class AntiDrop implements Listener {
     public static boolean canHoldTwoWaterBuckets(Player p) {
         int emptySlots = 0;
         for (ItemStack item : p.getInventory().getStorageContents())
-            if (item == null || item.getType() == Material.AIR) {
+            if (item.getType() == Material.AIR) {
                 emptySlots++;
                 if (emptySlots >= 2) return true;
             }
@@ -33,35 +33,50 @@ public final class AntiDrop implements Listener {
     }
 
     @EventHandler
-    public void cacheCursorSlot(InventoryClickEvent e) {
-        if (!(e.getClick() == ClickType.LEFT || e.getClick() == ClickType.RIGHT || e.getClick() == ClickType.CREATIVE))
+    public void cacheCursorSlot(InventoryClickEvent event) {
+        if (!(event.getClick() == ClickType.LEFT || event.getClick() == ClickType.RIGHT || event.getClick() == ClickType.CREATIVE))
             return;
         //Bukkit.broadcastMessage(e.getClick().toString());
-        ItemStack item = e.getCurrentItem();
+        ItemStack item = event.getCurrentItem();
         //Bukkit.broadcastMessage(item.toString());
-        if (lastCursorItem.containsKey(e.getWhoClicked().getUniqueId())) {
-            lastCursorItem.replace(e.getWhoClicked().getUniqueId(), item);
+        if (lastCursorItem.containsKey(event.getWhoClicked().getUniqueId())) {
+            lastCursorItem.replace(event.getWhoClicked().getUniqueId(), item);
             return;
         }
-        lastCursorItem.put(e.getWhoClicked().getUniqueId(), item);
+        lastCursorItem.put(event.getWhoClicked().getUniqueId(), item);
     }
 
     @EventHandler
-    public void clearOnLeave(PlayerQuitEvent e) {
-        if (lastCursorItem.containsKey(e.getPlayer().getUniqueId())) lastCursorItem.remove(e.getPlayer().getUniqueId());
+    public void clearOnLeave(PlayerQuitEvent event) {
+        lastCursorItem.remove(event.getPlayer().getUniqueId());
     }
 
     @EventHandler
-    public void onDrop(PlayerDropItemEvent e) {
-        if (SMPItem.isSMPItem(e.getItemDrop().getItemStack())) e.setCancelled(true);
+    public void onDrop(PlayerDropItemEvent event) {
+        if (SMPItem.isSMPItem(event.getItemDrop().getItemStack())) event.setCancelled(true);
     }
 
     //Don't use the Paper event, it just doesn't work.
     @EventHandler
-    public void onPickUp(PlayerPickupItemEvent e) {
-        if (!lastCursorItem.containsKey(e.getPlayer().getUniqueId())) return;
-        if (!SMPItem.isSMPItem(lastCursorItem.get(e.getPlayer().getUniqueId()))) return;
-        if (canHoldTwoWaterBuckets(e.getPlayer())) return;
-        e.setCancelled(true);
+    public void onPickUp(PlayerPickupItemEvent event) {
+        if (!lastCursorItem.containsKey(event.getPlayer().getUniqueId())) return;
+        if (!SMPItem.isSMPItem(lastCursorItem.get(event.getPlayer().getUniqueId()))) return;
+        if (canHoldTwoWaterBuckets(event.getPlayer())) return;
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onDeath(PlayerDeathEvent event) {
+        //We gotta clone it somehow
+        List<ItemStack> smpItems = new ArrayList<>();
+        for (ItemStack item : event.getDrops()) {
+            if (item == null) continue;
+            if (SMPItem.isSMPItem(item)) smpItems.add(item);
+        }
+        for (ItemStack item : smpItems) {
+            event.getDrops().remove(item);
+            if (event.getKeepInventory()) continue;
+            Common.runLater(1, () -> event.getPlayer().getInventory().addItem(item));
+        }
     }
 }
