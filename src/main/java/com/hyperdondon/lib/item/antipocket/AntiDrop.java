@@ -25,7 +25,7 @@ public final class AntiDrop implements Listener {
     public static boolean canHoldTwoWaterBuckets(Player p) {
         int emptySlots = 0;
         for (ItemStack item : p.getInventory().getStorageContents())
-            if (item.getType() == Material.AIR) {
+            if (item == null && item.getType() == Material.AIR) {
                 emptySlots++;
                 if (emptySlots >= 2) return true;
             }
